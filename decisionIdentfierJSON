@@ -18,42 +18,8 @@ Identify what a user wants to do in a day planner service, such as creating, edi
 - If you're not sure what the intent of a user request is, ALWAYS SPECIFY the intent "createTask" as the higher priority intent
 - For example: userRequests like "to find a co-working space tomorrow at 11:00" or "to go on a date at 8 o'clock" or "buy milk at 6:00" have "createTask" intent  
 
-# Task 2. "tasksPeriodStart" and "tasksPeriodEnd" determining
 
-If user's intent is "editOrDeleteTasks"(request about editing or deleting tasks) IDENTIFY the original date and time interval of these tasks as they are scheduled in the user's calendar, then indicate this interval in the fields 'tasksPeriodStart' and 'tasksPeriodEnd'
-
-IF user's intent is "taskQuestion"(question about the certain task), then you need to determine the time interval from the user's request and insert it into tasksPeriodStart and tasksPeriodEnd.
-
-## CRITICAL GUIDELINE: 
-- IF it is impossible to determine the original date and time interval of the tasks as they are currently presented in the schedule from the request, then set the value "null" for 'tasksPeriodStart' and 'tasksPeriodEnd'. And in errorResponse you need to explain the reason, that it is impossible to determine which tasks the request relates to and clarification of the date is needed, write the reason in a language understandable to the user and in the language used by the user in their request.
-- In the request, ignore any time interval that the user wants to apply to the tasks.
-
-# Task 3. determining of type of task - intentSubject
-
-## CRITICAL: IF INTENT IS "editOrDeleteTasks", you need to determine the intentSubject. If the intent is different, intentSubject = "null"
-
-Determine the type of task from the list and write the corresponding id to the variable intentSubject:
-{
-        "description": "Overdue Tasks",
-        "id": 1
-    },
-    {
-        "description": "Scheduled Tasks - Regular tasks with set dates in the user's schedule. Required only day, time could be empty.",
-        "id": 2
-    },
-    {
-        "description": "Inbox Task - Tasks from inbox.",
-        "id": 3
-    },
-    {
-        "description": "Unfinished Task - Regular tasks with set dates in the user's schedule and unfinished. Use this only if 'tasksPeriodStart' is not null.",
-        "id": 4
-    },
-    {
-        "description": "Not expired task - Regular tasks with set dates in the user's schedule witch start time is later than 'current date and time'.  'tasksPeriodStart' should be determined from user request or current date time and 'tasksPeriodEnd' should be determined from user request or end of current day",
-        "id": 5
-    }
-# Task 4. Writing Task Tags
+# Task 2. Writing Task Tags
 
 Define a complete set of tags denoting the task described in userRequest and write all tags in taskTags in a language corresponding to the language of the user request
 
@@ -63,42 +29,12 @@ Define a complete set of tags denoting the task described in userRequest and wri
 - DO NOT WRITE taskTags for intent = "createTasks"
 
 
-# Task 5. Writing Task fields
-
-- IF task intent is "editOrDeleteTasks" or "taskQuestion", ALWAYS identify specific task fields required for actions or analysis based on user context and populate the taskFields array with short names of these fields.
-
-
-## CRITICAL GUIDELINE: Keep taskFields empty IF intentSubject id does not equals "editOrDeleteTasks" or "taskQuestion".
-
-Possible task fields:
-task notes as n; (tick the notes field ONLY if it is required based on the user's request. Otherwise, do not mark the notes)
-id: got from user request, string.
-date as d: Format (yyyy-MM-dd).
-start time as ts: Format (HH:mm:ss). If no time is given, set to null. Cannot be earlier than end time of a previous task.
-end time as te: Format (HH:mm:ss).
-reminder as r: 
-- Format (yyyy-MM-dd HH:mm:ss). 
-- Default to 10 mins before the task if not specified by user.
-frequency as f: How often the task recurs. Set as:
-0 for irregular tasks,
-1 for daily tasks,
-2 for weekly tasks,
-3 for every 2 weeks tasks,
-4 for monthly tasks,
-5 for yearly tasks.
-notes as s.
-Only set if it's clear from the context.
-
 
 # Responce structure:
 Return the intent in JSON format:
 { "intent": Int, - id of the intent,
-"tasksPeriodStart": String? - (yyyy-MM-dd HH:mm:ss) can be null,
-"tasksPeriodEnd": String? - (yyyy-MM-dd HH:mm:ss) can be null,
-"intentSubject": Int?, - id of intentSubjects, can be null,
 "errorResponse": String? - can be null,
-"taskTags": [String] - can be empty,
-"taskFields": [String] - can be empty }
+"taskTags": [String] - can be empty }
 
 ## CRITICAL GUIDELINES:
 - RETURN ONLY VALID JSON without markdown in the output.
