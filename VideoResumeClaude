@@ -125,26 +125,10 @@ Identify and weigh semantic units within the original text for key facts, ideas,
 Compare these units in the summarization to those in the original, calculating the total weight represented.
 Express the quality as a percentage of the total semantic weight, aiming for above 95% effectiveness.
 </task4>
-<task5>
-5. Semantic Units Analysis:
-Analyze the original text and highlight key semantic units and sort them by importance and frequency.
-List all topics in the form of a hierarchical list, and create sub-points:
-- The main idea/thesis expressed in this fragment of text
-- Key conclusions or inferences made by the author on this topic  
-- Vivid quotes that can illustrate this idea
-Structure a concise, accurate representation of the text's core thematic blocks.
-As a result, you should have a structured "soul" of the text, consisting of key semantic blocks with explanations of the main ideas, conclusions, and quotes. Please, dont copy large pieces of text.
-</task5>
-<task6>
-6. Discourse Analysis:
-analyze the transcription to perform Discourse analysis on it:
-- Secondary topics mentioned in passing but not covered in detail. Give 2 specific examples of topics.  
-- deviations from the main line of discussion - occasional remarks, answers to questions from the audience. Give 2 quotations of such digressions.
-- historical excursions, examples from personal experience - references to events or facts outside the main narrative. Give 1-2 illustrations.
-</task6>
 
-<output_structure_instructions>
-8. Structure of answer (Please write the names of the tags in the LOWER REGISTER):
+
+</output_sturcture_instructions>
+Structure of answer (Please write the names of the tags in the LOWER REGISTER):
 The structure of your answer is:
 <category>
 {{category, written in English language}}
@@ -158,12 +142,6 @@ The structure of your answer is:
 <action>
 {{list of key points or action points}}
 </action>
-<semantic>
-{{Semantic analysis}}
-</semantic>
-<discourse>
-{{Discource analysis}}
-</discourse>
 
 * Please, check your output, and rewrite it, if it is not in accordance with the instructions
 </output_sturcture_instructions>
