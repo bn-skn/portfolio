@@ -1,5 +1,11 @@
+<style>
+    .vapi-btn {
+        z-index: 9999; /* Установите высокий z-index */
+        position: fixed; /* Зафиксируйте кнопку на экране */
+    }
+</style>
 <script>
-  var vapiInstance = null;
+  
   const assistant = "<46be5bbf-e813-4c2f-bd79-33c8a362dfa1"; // Substitute with your assistant ID
   const apiKey = "9aed914d-c60d-430d-b04d-4fc24f83d4cc"; // Substitute with your Public key from Vapi Dashboard.
   const buttonConfig = {
@@ -9,18 +15,18 @@
     height: "50px", // height of the button
     idle: { // button state when the call is not active.
         color: `rgb(43, 97, 186)`, 
-        type: "round", // or "round"
+        type: "pill", // or "round"
         icon: `https://unpkg.com/lucide-static@0.321.0/icons/phone.svg`,
     },
     loading: { // button state when the call is connecting
-        color: `rgb(93, 124, 202)`,
+        color: `rgb(43, 97, 186)`,
         type: "pill", // or "round"
         title: "Подключение...", // only required in case of Pill
         subtitle: "Пожалуйста подождите", // only required in case of pill
         icon: `https://unpkg.com/lucide-static@0.321.0/icons/loader-2.svg`,
     },
     active: { // button state when the call is in progress or active.
-        color: `rgb(255, 0, 0)`,
+        color: `rgb(43, 97, 186)`,
         type: "pill", // or "round"
         title: "Звонок в процессе...", // only required in case of Pill
         subtitle: "Завершить звонок.", // only required in case of pill
@@ -63,12 +69,10 @@
       vapiInstance.on('volume-level', (volume) => {
         console.log(`Assistant volume level: ${volume}`);
       });
-
       // Function calls and transcripts will be sent via messages
       vapiInstance.on('message', (message) => {
         console.log(message);
       });
-
       vapiInstance.on('error', (e) => {
         console.error(e)
       });
